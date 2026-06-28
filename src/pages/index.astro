@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import FlowDiagram from '../components/FlowDiagram.astro';
+import FitCard from '../components/FitCard.astro';
+import StatsBand from '../components/StatsBand.astro';
+import FinalCta from '../components/FinalCta.astro';
+---
+
+<BaseLayout title="Nexa Talent Co. — We run the backend, you run the content">
+  <Hero>
+    <FlowDiagram />
+  </Hero>
+
+  <section>
+    <div class="section-inner">
+      <div class="section-eyebrow" data-reveal>Who this is for</div>
+      <h2 class="section-title" data-reveal>You're great at content. That's the problem.</h2>
+      <p class="section-lead" data-reveal>
+        Most creators and coaches lose money not because their audience isn't big enough — but because nobody is running the business side while they create.
+      </p>
+      <div class="fit-grid" data-reveal-stagger>
+        <FitCard
+          mark="01"
+          title="You have an audience"
+          text="30K or 300K — you've already done the hard part. People know you and trust you."
+        />
+        <FitCard
+          mark="02"
+          title="You're not converting it"
+          text="You're selling a course, coaching, or offer — but sales, emails, and funnels aren't where your time should go."
+        />
+        <FitCard
+          mark="03"
+          title="You want to stay the talent"
+          text="You'd rather post, film, and create — and let someone else run the operations behind the scenes."
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-band">
+    <div class="section-inner">
+      <div class="section-eyebrow" data-reveal>What we do</div>
+      <h2 class="section-title" data-reveal>The full backend, handled.</h2>
+      <p class="section-lead" data-reveal>
+        We step in as your operations partner — not a freelancer, not an agency you have to micromanage.
+      </p>
+      <div class="fit-grid" data-reveal-stagger>
+        <FitCard
+          mark="→"
+          title="Sales & Offers"
+          text="We build and refine the offer itself, then handle the sales conversations that turn followers into paying clients."
+        />
+        <FitCard
+          mark="→"
+          title="Funnels & Email"
+          text="Landing pages, email sequences, and follow-up systems that work in the background, every day."
+        />
+        <FitCard
+          mark="→"
+          title="Operations"
+          text="Onboarding, payments, scheduling, client communication — the parts of running a business that have nothing to do with content."
+        />
+      </div>
+    </div>
+  </section>
+
+  <StatsBand
+    stats={[
+      { num: '20–40%', label: 'Revenue share — we only earn when you do' },
+      { num: '$0', label: 'Upfront fees to get started' },
+      { num: '2', label: 'Partner slots open this quarter' },
+    ]}
+  />
+
+  <section>
+    <div class="section-inner">
+      <div class="section-eyebrow" data-reveal>How we work</div>
+      <h2 class="section-title" data-reveal>Three steps. No fluff.</h2>
+      <p class="section-lead" data-reveal>
+        We're selectively onboarding partners — which means founding partners get more attention, not less.
+      </p>
+      <div class="fit-grid" data-reveal-stagger>
+        <FitCard
+          mark="01"
+          title="Free audit"
+          text="We look at your current audience, offer, and funnel — and tell you exactly where the money is being left on the table."
+        />
+        <FitCard
+          mark="02"
+          title="We build the system"
+          text="Offer, funnel, emails, and sales process — set up around your existing content, with zero disruption to what you already post."
+        />
+        <FitCard
+          mark="03"
+          title="We run it monthly"
+          text="We manage sales and operations every month, report results clearly, and only take a cut of what we actually generate."
+        />
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    heading="Ready to see what your audience<br/>is actually worth?"
+    subtext="Free audit. No pressure. No upfront cost."
+    ctaText="Book a free audit"
+    ctaHref="/contact"
+  />
+</BaseLayout>

@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PricingCard from '../components/PricingCard.astro';
+import FinalCta from '../components/FinalCta.astro';
+---
+
+<BaseLayout title="Pricing — Nexa Talent Co.">
+  <PageHeader
+    eyebrow="Pricing"
+    heading="We only earn when you earn."
+    subtext="No upfront fees. No hidden costs. A revenue share that scales with your results — not your stress."
+  />
+
+  <section>
+    <div class="section-inner">
+      <!-- PLACEHOLDER PRICING: Confirm real revenue-share numbers before public launch -->
+      <div class="pricing-grid" data-reveal-stagger>
+        <PricingCard
+          tier="Starter"
+          setupFee="$0"
+          revenueShare="30%"
+          bestFor="Creators just starting to monetize, 0–1 active offers, under 50K followers"
+          includes={[
+            '1 funnel build',
+            'Email setup and basic sequences',
+            'Monthly reporting',
+            'Async support',
+          ]}
+        />
+        <PricingCard
+          tier="Growth"
+          setupFee="$0"
+          revenueShare="25%"
+          bestFor="Creators with an existing offer who need consistent sales operations"
+          includes={[
+            'Everything in Starter',
+            'Dedicated sales follow-up',
+            'Offer optimization',
+            'Weekly check-ins',
+          ]}
+          popular={true}
+        />
+        <PricingCard
+          tier="Premium"
+          setupFee="$0"
+          revenueShare="20%"
+          bestFor="Established creators/coaches with multiple offers or higher monthly revenue who need a full hands-off operations partner"
+          includes={[
+            'Everything in Growth',
+            'Priority support',
+            'Multi-offer management',
+            'Dedicated strategy calls',
+          ]}
+        />
+      </div>
+
+      <p class="pricing-trust" data-reveal>
+        <strong>No upfront cost — we only earn when you earn.</strong> Every tier starts at $0 setup. We invest our time upfront because our success is tied directly to yours.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-band">
+    <div class="section-inner">
+      <div class="section-eyebrow" data-reveal>How tiers work</div>
+      <h2 class="section-title" data-reveal>Pick the level that matches where you are.</h2>
+      <p class="section-lead" data-reveal>
+        Not sure which tier fits? The free audit will tell you — we'll recommend the right starting point based on your audience size, offer maturity, and revenue goals.
+      </p>
+      <div class="prose-block" data-reveal>
+        <p>
+          All tiers include the same core philosophy: you create, we operate. The difference is depth — how much sales follow-up, optimization, and strategic support you need as your business grows.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    heading="Not sure which tier fits?"
+    subtext="Book a free audit and we'll recommend the right starting point."
+    ctaText="Book a free audit"
+    ctaHref="/contact"
+  />
+</BaseLayout>

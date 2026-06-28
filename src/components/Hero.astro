@@ -1,0 +1,19 @@
+---
+import ParticleField from './ParticleField.astro';
+---
+
+<section class="hero">
+  <ParticleField />
+  <div class="hero-glow"></div>
+  <div class="hero-glow-secondary"></div>
+  <div class="eyebrow">Now taking on 2 new partners this quarter</div>
+  <h1>You make the content.<br />We make it <span class="accent">pay.</span></h1>
+  <p class="lead">
+    Nexa Talent runs the sales, funnels, and backend operations behind your audience — so you can stay focused on the thing you're actually good at: creating.
+  </p>
+  <div class="hero-ctas">
+    <a href="/contact" class="btn-primary">Book a free audit</a>
+    <a href="/how-we-work" class="btn-secondary">See how it works</a>
+  </div>
+  <slot />
+</section>

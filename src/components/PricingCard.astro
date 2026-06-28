@@ -1,0 +1,29 @@
+---
+interface Props {
+  tier: string;
+  setupFee: string;
+  revenueShare: string;
+  bestFor: string;
+  includes: string[];
+  popular?: boolean;
+}
+
+const { tier, setupFee, revenueShare, bestFor, includes, popular = false } = Astro.props;
+---
+
+<div class={`pricing-card${popular ? ' is-popular' : ''}`}>
+  {popular && <span class="pricing-badge">Most Popular</span>}
+  <div class="pricing-tier">{tier}</div>
+  <div class="pricing-share">{revenueShare}<span> revenue share</span></div>
+  <div class="pricing-setup">Setup fee: {setupFee}</div>
+  <div class="pricing-best"><strong>Best for:</strong> {bestFor}</div>
+  <div class="pricing-includes">
+    <h4>Includes</h4>
+    <ul>
+      {includes.map((item) => <li>{item}</li>)}
+    </ul>
+  </div>
+  <a href="/contact" class="btn-primary" style="text-align:center;">Book a free audit</a>
+</div>
+
+<!-- PLACEHOLDER PRICING: Confirm real revenue-share numbers before public launch -->

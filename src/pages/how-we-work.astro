@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const steps = [
+  {
+    num: '01',
+    title: 'Free audit',
+    paragraphs: [
+      'We start with a no-cost review of your current setup — audience size, existing offers, funnel health, email list, and sales process.',
+      "You'll get a clear breakdown of where revenue is being left on the table, what we'd fix first, and whether we're the right fit. No pitch deck. No obligation.",
+    ],
+  },
+  {
+    num: '02',
+    title: 'We build the system',
+    paragraphs: [
+      'If we move forward, we build the full backend around your existing content — offer structure, landing pages, email sequences, and sales workflows.',
+      "Everything is designed to work with what you already post. You don't change your content strategy. We plug revenue infrastructure into the audience you've already built.",
+    ],
+  },
+  {
+    num: '03',
+    title: 'We run it monthly',
+    paragraphs: [
+      'Once live, we manage sales follow-up, email sends, funnel optimization, and client operations every month.',
+      "You get clear reporting on what's working. We take our revenue share only on what we actually help generate — aligned incentives, month after month.",
+    ],
+  },
+];
+
+const faqs = [
+  {
+    q: 'Do I lose control of my brand?',
+    a: 'No. Your content, voice, and public presence stay entirely yours. We operate behind the scenes on sales, funnels, and operations. You approve the offer positioning and any customer-facing copy before it goes live.',
+  },
+  {
+    q: 'What if I already have a course or offer?',
+    a: "That's actually ideal. We don't need to invent something from scratch — we optimize what you already have, fix the funnel gaps, and build the sales and email systems around it.",
+  },
+  {
+    q: 'How is this different from a regular agency?',
+    a: 'Agencies charge retainers and deliver projects. We take a revenue share and stay in the operations seat long-term. Our success is tied to your revenue, not to billing hours or shipping deliverables.',
+  },
+  {
+    q: 'What do you need from me?',
+    a: 'Access to your existing platforms, clarity on your offer, and continued content creation. We handle everything on the business side — you keep doing what your audience already trusts you for.',
+  },
+];
+---
+
+<BaseLayout title="How We Work — Nexa Talent Co.">
+  <PageHeader
+    eyebrow="How We Work"
+    heading="Three steps. No fluff."
+    subtext="We're selectively onboarding partners — which means every founding partner gets hands-on attention from day one."
+  />
+
+  <section>
+    <div class="section-inner">
+      <div class="section-eyebrow" data-reveal>The process</div>
+      <h2 class="section-title" data-reveal>From audit to monthly operations.</h2>
+      <p class="section-lead" data-reveal>
+        This is how we work instead of a portfolio page — transparent process, no fabricated results.
+      </p>
+
+      {steps.map((step) => (
+        <div class="step-detail" data-reveal>
+          <div class="step-num">{step.num}</div>
+          <div class="step-content">
+            <h3>{step.title}</h3>
+            {step.paragraphs.map((p) => <p>{p}</p>)}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-band">
+    <div class="section-inner">
+      <div class="section-eyebrow" data-reveal>FAQ</div>
+      <h2 class="section-title" data-reveal>Common questions.</h2>
+      <p class="section-lead" data-reveal>
+        Straight answers to the things creators usually ask before partnering with an operations team.
+      </p>
+
+      <div class="faq-list" data-reveal-stagger>
+        {faqs.map((faq) => (
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              {faq.q}
+              <span aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">{faq.a}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    heading="Ready for step one?"
+    subtext="Book a free audit. We'll tell you exactly where the gaps are."
+    ctaText="Book a free audit"
+    ctaHref="/contact"
+  />
+</BaseLayout>

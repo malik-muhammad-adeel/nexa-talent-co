@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FitCard from '../components/FitCard.astro';
+import FinalCta from '../components/FinalCta.astro';
+---
+
+<BaseLayout title="About — Nexa Talent Co.">
+  <PageHeader
+    eyebrow="About Us"
+    heading="You're great at content. That's the problem."
+    subtext="Most creators and coaches lose money not because their audience isn't big enough — but because nobody is running the business side while they create."
+  />
+
+  <section>
+    <div class="section-inner">
+      <div class="prose-block" data-reveal>
+        <h2>Why Nexa Talent Co. exists</h2>
+        <p>
+          You built an audience through content — posts, videos, stories, trust. That's the hard part, and you did it. But turning that attention into consistent revenue takes a completely different skill set: offers, funnels, email sequences, sales follow-up, and day-to-day operations.
+        </p>
+        <p>
+          Most creators try to do both. They post in the morning and scramble with Stripe, DMs, and landing pages at night. The content suffers, the sales suffer, and nobody wins.
+        </p>
+        <p>
+          Nexa Talent Co. exists to split that work cleanly. You stay the talent. We run the backend — and we only earn when you do.
+        </p>
+      </div>
+
+      <div class="section-eyebrow" data-reveal>Our approach</div>
+      <h2 class="section-title" data-reveal>Partner mentality, not vendor mentality.</h2>
+      <p class="section-lead" data-reveal>
+        We're not an agency you hire for a one-off project. We're an operations partner aligned with your revenue.
+      </p>
+
+      <div class="fit-grid" data-reveal-stagger>
+        <FitCard
+          mark="01"
+          title="Revenue-share model"
+          text="We take a percentage of the revenue we help generate — not a flat retainer that costs you whether you make money or not."
+        />
+        <FitCard
+          mark="02"
+          title="Zero upfront fees"
+          text="No setup charges, no onboarding invoices. We invest our time upfront because we're betting on your audience."
+        />
+        <FitCard
+          mark="03"
+          title="Selective onboarding"
+          text="We're early and intentionally small. That means more hands-on attention for every partner we take on — not a crowded client roster."
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-band">
+    <div class="section-inner">
+      <div class="prose-block" data-reveal>
+        <h2>How we're different from a typical agency</h2>
+        <p>
+          Agencies sell deliverables — a funnel, a campaign, a report. When the project ends, so does the relationship. Nexa Talent Co. stays in the operations seat month after month: running sales, optimizing offers, and managing the systems that turn your content into revenue.
+        </p>
+        <p>
+          We don't need fake case studies to prove the model. Our process is transparent — audit, build, run — and our incentives are aligned with yours from day one.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    heading="Want to see if we're a fit?"
+    subtext="Start with a free audit. No pitch deck, no pressure."
+    ctaText="Book a free audit"
+    ctaHref="/contact"
+  />
+</BaseLayout>

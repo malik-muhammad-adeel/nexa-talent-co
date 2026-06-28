@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FitCard from '../components/FitCard.astro';
+import FinalCta from '../components/FinalCta.astro';
+---
+
+<BaseLayout title="Services — Nexa Talent Co.">
+  <PageHeader
+    eyebrow="Services"
+    heading="The full backend, handled."
+    subtext="We step in as your operations partner — not a freelancer, not an agency you have to micromanage."
+  />
+
+  <section>
+    <div class="section-inner">
+      <div class="fit-grid" data-reveal-stagger>
+        <FitCard
+          mark="01"
+          title="Sales & Offers"
+          text="We build and refine the offer itself, then handle the sales conversations that turn followers into paying clients."
+          bullets={[
+            'Offer positioning and pricing structure',
+            'Sales page copy and conversion optimization',
+            'DM and call follow-up on warm leads',
+            'Objection handling and close process',
+            'Monthly offer performance review',
+          ]}
+        />
+        <FitCard
+          mark="02"
+          title="Funnels & Email"
+          text="Landing pages, email sequences, and follow-up systems that work in the background, every day."
+          bullets={[
+            'Lead capture funnel build and deployment',
+            'Welcome and nurture email sequences',
+            'Cart abandonment and re-engagement flows',
+            'List segmentation and send scheduling',
+            'Open rate and conversion tracking',
+          ]}
+        />
+        <FitCard
+          mark="03"
+          title="Operations"
+          text="Onboarding, payments, scheduling, client communication — the parts of running a business that have nothing to do with content."
+          bullets={[
+            'Client onboarding and welcome workflows',
+            'Payment processing and invoicing setup',
+            'Scheduling and calendar management',
+            'Client communication templates',
+            'Monthly reporting and revenue tracking',
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-band">
+    <div class="section-inner">
+      <div class="section-eyebrow" data-reveal>What you keep doing</div>
+      <h2 class="section-title" data-reveal>You create. We operate.</h2>
+      <p class="section-lead" data-reveal>
+        Your content, your voice, your brand — untouched. We work behind the scenes on everything that happens after someone decides they trust you.
+      </p>
+      <div class="prose-block" data-reveal>
+        <p>
+          You don't need to learn funnels, copywriting frameworks, or CRM tools. You don't need to hire a VA, a copywriter, and a sales person separately. Nexa Talent Co. is the single backend partner that handles the full revenue stack — aligned with your income, not your invoice.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <FinalCta
+    heading="See what we can build for your offer"
+    subtext="Free audit. We'll map the gaps in your current funnel."
+    ctaText="Book a free audit"
+    ctaHref="/contact"
+  />
+</BaseLayout>

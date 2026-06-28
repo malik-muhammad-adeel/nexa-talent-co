@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+
+<BaseLayout title="Contact — Nexa Talent Co.">
+  <PageHeader
+    eyebrow="Contact"
+    heading="Pick whatever works for you."
+    subtext="Form, email, or Instagram DM — all three are equally valid. No wrong door."
+  />
+
+  <section>
+    <div class="section-inner">
+      <div class="contact-grid" data-reveal-stagger>
+        <ContactForm />
+
+        <div class="contact-alt">
+          <div class="contact-method">
+            <h3>Email us directly</h3>
+            <p>Prefer typing it out in your own email client? Send us a message anytime.</p>
+            <a href="mailto:nexa.talent.co@gmail.com" class="email-link">nexa.talent.co@gmail.com</a>
+          </div>
+
+          <div class="contact-method">
+            <h3>DM us on Instagram</h3>
+            <p>Quick question or want to start a conversation in the DMs? We're active on Instagram.</p>
+            <a
+              href="https://www.instagram.com/nexa.talent.co/"
+              class="btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              DM us on Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

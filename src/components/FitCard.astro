@@ -1,0 +1,21 @@
+---
+interface Props {
+  mark: string;
+  title: string;
+  text: string;
+  bullets?: string[];
+}
+
+const { mark, title, text, bullets } = Astro.props;
+---
+
+<div class="fit-card">
+  <span class="fit-mark">{mark}</span>
+  <h3>{title}</h3>
+  <p>{text}</p>
+  {bullets && bullets.length > 0 && (
+    <ul>
+      {bullets.map((item) => <li>{item}</li>)}
+    </ul>
+  )}
+</div>
