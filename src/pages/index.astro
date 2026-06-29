@@ -5,6 +5,7 @@ import FlowDiagram from '../components/FlowDiagram.astro';
 import FitCard from '../components/FitCard.astro';
 import StatsBand from '../components/StatsBand.astro';
 import FinalCta from '../components/FinalCta.astro';
+import LowerAmbient from '../components/LowerAmbient.astro';
 ---
 
 <BaseLayout title="Nexa Talent Co. — We run the backend, you run the content">
@@ -13,6 +14,8 @@ import FinalCta from '../components/FinalCta.astro';
   </Hero>
 
   <section>
+    <div class="section-ambient" aria-hidden="true"></div>
+    <LowerAmbient />
     <div class="section-inner">
       <div class="section-eyebrow" data-reveal>Who this is for</div>
       <h2 class="section-title" data-reveal>You're great at content. That's the problem.</h2>
@@ -40,6 +43,8 @@ import FinalCta from '../components/FinalCta.astro';
   </section>
 
   <section class="section-band">
+    <div class="section-ambient" aria-hidden="true"></div>
+    <LowerAmbient />
     <div class="section-inner">
       <div class="section-eyebrow" data-reveal>What we do</div>
       <h2 class="section-title" data-reveal>The full backend, handled.</h2>
@@ -75,6 +80,8 @@ import FinalCta from '../components/FinalCta.astro';
   />
 
   <section>
+    <div class="section-ambient" aria-hidden="true"></div>
+    <LowerAmbient />
     <div class="section-inner">
       <div class="section-eyebrow" data-reveal>How we work</div>
       <h2 class="section-title" data-reveal>Three steps. No fluff.</h2>

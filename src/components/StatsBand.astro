@@ -1,4 +1,6 @@
 ---
+import LowerAmbient from './LowerAmbient.astro';
+
 interface Stat {
   num: string;
   label: string;
@@ -12,6 +14,8 @@ const { stats } = Astro.props;
 ---
 
 <div class="stats-band">
+  <div class="section-ambient" aria-hidden="true"></div>
+  <LowerAmbient />
   <div class="stats-grid" data-reveal-stagger>
     {stats.map((stat) => (
       <div>

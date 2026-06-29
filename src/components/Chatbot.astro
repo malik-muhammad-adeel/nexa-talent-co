@@ -1,0 +1,64 @@
+<div class="chatbot" data-chatbot>
+  <button
+    type="button"
+    class="chatbot-toggle"
+    data-chatbot-toggle
+    aria-label="Open chat assistant"
+    aria-expanded="false"
+  >
+    <svg class="chatbot-toggle-icon chatbot-toggle-icon--open" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3c-4.97 0-9 3.58-9 8 0 1.57.52 3.03 1.42 4.24L3 21l5.26-1.36A9.2 9.2 0 0 0 12 19c4.97 0 9-3.58 9-8s-4.03-8-9-8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    </svg>
+    <svg class="chatbot-toggle-icon chatbot-toggle-icon--close" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <span class="chatbot-toggle-label">Ask Nexa</span>
+  </button>
+
+  <div class="chatbot-panel" data-chatbot-panel hidden>
+    <div class="chatbot-header">
+      <div class="chatbot-header-brand">
+        <div class="chatbot-avatar">
+          <img src="/images/logo-nt.png" alt="" width="28" height="28" />
+        </div>
+        <div>
+          <strong>Nexa Assistant</strong>
+          <span>Answers about services, pricing & onboarding</span>
+        </div>
+      </div>
+      <button type="button" class="chatbot-close" data-chatbot-close aria-label="Close chat">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="chatbot-messages" data-chatbot-messages role="log" aria-live="polite" aria-relevant="additions"></div>
+
+    <div class="chatbot-prompts" data-chatbot-prompts>
+      <span class="chatbot-prompts-label">Quick questions</span>
+      <div class="chatbot-prompts-list">
+        <button type="button">What does Nexa Talent do?</button>
+        <button type="button">How does pricing work?</button>
+        <button type="button">How do I get started?</button>
+      </div>
+    </div>
+
+    <form class="chatbot-form" data-chatbot-form>
+      <label class="visually-hidden" for="chatbot-input">Your message</label>
+      <input
+        id="chatbot-input"
+        type="text"
+        data-chatbot-input
+        placeholder="Ask about pricing, services, or getting started..."
+        autocomplete="off"
+        maxlength="500"
+      />
+      <button type="submit" class="chatbot-send" aria-label="Send message">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m5 12 14-7-4 7 4 7-14-7Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
