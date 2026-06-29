@@ -2,7 +2,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let revealObserver = null;
   let scrollHandler = null;
-  let navBound = false;
+  let siteAbort = null;
 
   function initReveal() {
     if (revealObserver) {
@@ -51,28 +51,37 @@
     scrollHandler();
   }
 
-  function initMobileNav() {
-    if (navBound) return;
-
-    const toggle = document.querySelector('.nav-toggle');
+  function closeMobileNav() {
     const navCenter = document.querySelector('.nav-center');
-    if (!toggle || !navCenter) return;
+    const toggle = document.querySelector('.nav-toggle');
+    if (navCenter) navCenter.classList.remove('is-open');
+    if (toggle) {
+      toggle.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  }
 
-    navBound = true;
+  function initMobileNav(signal) {
+    document.addEventListener(
+      'click',
+      (e) => {
+        const toggle = e.target.closest('.nav-toggle');
+        if (toggle) {
+          const navCenter = document.querySelector('.nav-center');
+          if (!navCenter) return;
+          const open = navCenter.classList.toggle('is-open');
+          toggle.classList.toggle('is-open', open);
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          return;
+        }
 
-    toggle.addEventListener('click', () => {
-      const open = navCenter.classList.toggle('is-open');
-      toggle.classList.toggle('is-open', open);
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-
-    navCenter.addEventListener('click', (e) => {
-      if (e.target.closest('a')) {
-        navCenter.classList.remove('is-open');
-        toggle.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
+        const navLink = e.target.closest('.nav-center a[href]');
+        if (navLink) {
+          closeMobileNav();
+        }
+      },
+      { signal }
+    );
   }
 
   function initActiveNav() {
@@ -121,15 +130,37 @@
     });
   }
 
+  function cleanupSite() {
+    if (siteAbort) {
+      siteAbort.abort();
+      siteAbort = null;
+    }
+
+    if (revealObserver) {
+      revealObserver.disconnect();
+      revealObserver = null;
+    }
+
+    if (scrollHandler) {
+      window.removeEventListener('scroll', scrollHandler);
+      scrollHandler = null;
+    }
+  }
+
   function initSite() {
+    cleanupSite();
+    siteAbort = new AbortController();
+
+    closeMobileNav();
     initReveal();
     initNavScroll();
-    initMobileNav();
+    initMobileNav(siteAbort.signal);
     initActiveNav();
     initFaq();
     initContactForm();
   }
 
-  initSite();
+  document.addEventListener('astro:before-swap', cleanupSite);
   document.addEventListener('astro:page-load', initSite);
+  initSite();
 })();

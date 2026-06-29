@@ -63,9 +63,10 @@
   let ty = 0;
   let rafId = null;
   let dirty = true;
+  let abortController = null;
 
   function render() {
-    if (dirty) {
+    if (dirty && inner) {
       inner.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
       dirty = false;
     }
@@ -73,7 +74,7 @@
   }
 
   function setPointer(isPointer) {
-    if (pointer === isPointer) return;
+    if (!inner || pointer === isPointer) return;
     pointer = isPointer;
     inner.innerHTML = isPointer ? POINTER : ARROW;
     inner.classList.toggle('is-pointer', isPointer);
@@ -83,7 +84,7 @@
     tx = e.clientX;
     ty = e.clientY;
 
-    if (!visible) {
+    if (!visible && root) {
       visible = true;
       root.classList.add('is-visible');
       x = tx;
@@ -101,13 +102,41 @@
 
   function onLeave() {
     visible = false;
-    root.classList.remove('is-visible');
+    if (root) root.classList.remove('is-visible');
+  }
+
+  function cleanupCursor() {
+    if (abortController) {
+      abortController.abort();
+      abortController = null;
+    }
+
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+
+    if (root && root.parentNode) {
+      root.parentNode.removeChild(root);
+    }
+
+    root = null;
+    inner = null;
+    visible = false;
+    pointer = false;
+    dirty = true;
+    document.body.classList.remove('has-mesh-cursor');
+    delete document.body.dataset.cursorReady;
   }
 
   function initCursor() {
-    if (document.body.dataset.cursorReady === 'true') return;
-    document.body.dataset.cursorReady = 'true';
+    cleanupCursor();
+
+    abortController = new AbortController();
+    const signal = abortController.signal;
+
     document.body.classList.add('has-mesh-cursor');
+    document.body.dataset.cursorReady = 'true';
 
     root = document.createElement('div');
     root.className = 'mesh-cursor';
@@ -118,10 +147,12 @@
     root.appendChild(inner);
     document.body.appendChild(root);
 
-    document.addEventListener('mousemove', onMove, { passive: true });
-    document.addEventListener('mouseleave', onLeave);
+    document.addEventListener('mousemove', onMove, { passive: true, signal });
+    document.addEventListener('mouseleave', onLeave, { signal });
     rafId = requestAnimationFrame(render);
   }
 
+  document.addEventListener('astro:before-swap', cleanupCursor);
+  document.addEventListener('astro:page-load', initCursor);
   initCursor();
 })();

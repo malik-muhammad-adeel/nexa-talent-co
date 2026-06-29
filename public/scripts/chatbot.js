@@ -50,7 +50,7 @@
     "Hi — I'm the Nexa Talent assistant. Ask me about our services, pricing, process, or how to get started. How can I help?";
 
   let isOpen = false;
-  let bound = false;
+  let chatbotAbort = null;
 
   function normalize(text) {
     return text.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
@@ -151,53 +151,74 @@
     }, 300);
   }
 
-  function bindChatbot() {
-    if (bound) {
-      setOpen(false);
-      return;
+  function cleanupChatbot() {
+    if (chatbotAbort) {
+      chatbotAbort.abort();
+      chatbotAbort = null;
     }
+    isOpen = false;
+    document.body.classList.remove('chatbot-open');
+  }
+
+  function bindChatbot() {
+    cleanupChatbot();
 
     const els = getElements();
     if (!els || !els.root || !els.panel || !els.toggle || !els.form || !els.input) return;
 
-    bound = true;
+    chatbotAbort = new AbortController();
+    const { signal } = chatbotAbort;
+
     setOpen(false);
 
-    els.root.addEventListener('click', (e) => {
-      if (e.target.closest('[data-chatbot-close]')) {
-        e.preventDefault();
-        e.stopPropagation();
-        setOpen(false);
-        return;
-      }
+    els.root.addEventListener(
+      'click',
+      (e) => {
+        if (e.target.closest('[data-chatbot-close]')) {
+          e.preventDefault();
+          e.stopPropagation();
+          setOpen(false);
+          return;
+        }
 
-      if (e.target.closest('[data-chatbot-toggle]')) {
-        e.preventDefault();
-        setOpen(!isOpen);
-        return;
-      }
+        if (e.target.closest('[data-chatbot-toggle]')) {
+          e.preventDefault();
+          setOpen(!isOpen);
+          return;
+        }
 
-      const promptBtn = e.target.closest('.chatbot-prompts-list button');
-      if (promptBtn) {
-        e.preventDefault();
-        sendMessage(promptBtn.textContent || '');
-      }
-    });
+        const promptBtn = e.target.closest('.chatbot-prompts-list button');
+        if (promptBtn) {
+          e.preventDefault();
+          sendMessage(promptBtn.textContent || '');
+        }
+      },
+      { signal }
+    );
 
-    els.form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      sendMessage(els.input.value);
-    });
+    els.form.addEventListener(
+      'submit',
+      (e) => {
+        e.preventDefault();
+        sendMessage(els.input.value);
+      },
+      { signal }
+    );
 
     if (els.backdrop) {
-      els.backdrop.addEventListener('click', () => setOpen(false));
+      els.backdrop.addEventListener('click', () => setOpen(false), { signal });
     }
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isOpen) setOpen(false);
-    });
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        if (e.key === 'Escape' && isOpen) setOpen(false);
+      },
+      { signal }
+    );
   }
 
-  bindChatbot();
+  document.addEventListener('astro:before-swap', cleanupChatbot);
   document.addEventListener('astro:page-load', bindChatbot);
+  bindChatbot();
 })();

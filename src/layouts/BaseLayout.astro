@@ -3,7 +3,7 @@ import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Chatbot from '../components/Chatbot.astro';
-import DotBackground from '../components/DotBackground.astro';
+import NetworkBackground from '../components/NetworkBackground.astro';
 import '../styles/global.css';
 import '@fontsource/inter/latin-400.css';
 import '@fontsource/inter/latin-500.css';
@@ -33,7 +33,7 @@ const { title, description = 'Nexa Talent Co. runs the backend — sales, funnel
   </head>
   <body>
     <div class="site-canvas">
-      <DotBackground />
+      <NetworkBackground transition:persist />
       <Nav transition:persist />
       <main transition:name="main" transition:animate="none">
         <slot />
@@ -41,6 +41,7 @@ const { title, description = 'Nexa Talent Co. runs the backend — sales, funnel
     </div>
     <Footer transition:persist />
     <Chatbot transition:persist />
+    <script src="/scripts/network-background.js" defer></script>
     <script src="/scripts/site.js" defer></script>
     <script src="/scripts/chatbot.js" defer></script>
     <script src="/scripts/cursor.js" defer></script>
