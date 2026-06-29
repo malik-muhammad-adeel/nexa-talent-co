@@ -1,6 +1,4 @@
 ---
-import ParticleField from './ParticleField.astro';
-
 interface Props {
   eyebrow: string;
   heading: string;
@@ -11,7 +9,6 @@ const { eyebrow, heading, subtext } = Astro.props;
 ---
 
 <header class="page-header">
-  <ParticleField />
   <div class="header-glow"></div>
   <div class="section-inner">
     <div class="eyebrow">{eyebrow}</div>

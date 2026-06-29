@@ -3,7 +3,15 @@ import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Chatbot from '../components/Chatbot.astro';
+import DotBackground from '../components/DotBackground.astro';
 import '../styles/global.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/sora/latin-600.css';
+import '@fontsource/sora/latin-700.css';
+import '@fontsource/sora/latin-800.css';
+import '@fontsource/space-mono/latin-400.css';
 
 interface Props {
   title: string;
@@ -19,25 +27,21 @@ const { title, description = 'Nexa Talent Co. runs the backend — sales, funnel
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/png" href="/images/logo-nt.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="icon" type="image/webp" href="/images/logo-icon.webp" />
     <ClientRouter fallback="swap" />
     <title>{title}</title>
   </head>
   <body>
-    <Nav transition:persist />
-    <main transition:name="main" transition:animate="none">
-      <slot />
-    </main>
+    <div class="site-canvas">
+      <DotBackground />
+      <Nav transition:persist />
+      <main transition:name="main" transition:animate="none">
+        <slot />
+      </main>
+    </div>
     <Footer transition:persist />
     <Chatbot transition:persist />
     <script src="/scripts/site.js" defer></script>
-    <script src="/scripts/particles.js" defer></script>
     <script src="/scripts/chatbot.js" defer></script>
     <script src="/scripts/cursor.js" defer></script>
   </body>

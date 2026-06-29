@@ -1,4 +1,6 @@
 ---
+import LogoImage from './LogoImage.astro';
+
 const quickLinks = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
@@ -20,7 +22,7 @@ const socialLinks = [
     <div class="footer-brand-block">
       <div class="footer-logo-wrap">
         <div class="footer-logo">
-          <img src="/images/logo-nt.png" alt="Nexa Talent Co." width="52" height="52" />
+          <LogoImage width={52} height={52} />
         </div>
         <div class="footer-wordmark">NEXA TALENT CO.</div>
       </div>

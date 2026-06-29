@@ -2,6 +2,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let revealObserver = null;
   let scrollHandler = null;
+  let navBound = false;
 
   function initReveal() {
     if (revealObserver) {
@@ -51,25 +52,26 @@
   }
 
   function initMobileNav() {
+    if (navBound) return;
+
     const toggle = document.querySelector('.nav-toggle');
     const navCenter = document.querySelector('.nav-center');
     if (!toggle || !navCenter) return;
 
-    toggle.replaceWith(toggle.cloneNode(true));
-    const freshToggle = document.querySelector('.nav-toggle');
+    navBound = true;
 
-    freshToggle.addEventListener('click', () => {
+    toggle.addEventListener('click', () => {
       const open = navCenter.classList.toggle('is-open');
-      freshToggle.classList.toggle('is-open', open);
-      freshToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
 
-    navCenter.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
+    navCenter.addEventListener('click', (e) => {
+      if (e.target.closest('a')) {
         navCenter.classList.remove('is-open');
-        freshToggle.classList.remove('is-open');
-        freshToggle.setAttribute('aria-expanded', 'false');
-      });
+        toggle.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
     });
   }
 
@@ -87,13 +89,11 @@
   }
 
   function initFaq() {
-    document.querySelectorAll('.faq-question').forEach((btn) => {
-      btn.replaceWith(btn.cloneNode(true));
-    });
-
-    document.querySelectorAll('.faq-question').forEach((btn) => {
+    document.querySelectorAll('.faq-item:not([data-faq-bound])').forEach((item) => {
+      const btn = item.querySelector('.faq-question');
+      if (!btn) return;
+      item.dataset.faqBound = 'true';
       btn.addEventListener('click', () => {
-        const item = btn.closest('.faq-item');
         const wasOpen = item.classList.contains('is-open');
         document.querySelectorAll('.faq-item.is-open').forEach((el) => el.classList.remove('is-open'));
         if (!wasOpen) item.classList.add('is-open');
@@ -102,15 +102,13 @@
   }
 
   function initContactForm() {
-    const form = document.querySelector('.contact-form form');
+    const form = document.querySelector('.contact-form form:not([data-form-bound])');
     if (!form) return;
 
-    form.replaceWith(form.cloneNode(true));
-    const freshForm = document.querySelector('.contact-form form');
-
-    freshForm.addEventListener('submit', (e) => {
+    form.dataset.formBound = 'true';
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const data = new FormData(freshForm);
+      const data = new FormData(form);
       const name = data.get('name') || '';
       const email = data.get('email') || '';
       const instagram = data.get('instagram') || '';

@@ -1,4 +1,6 @@
 ---
+import LogoImage from './LogoImage.astro';
+
 const links = [
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
@@ -11,12 +13,12 @@ const links = [
   <nav class="nav-inner" aria-label="Main navigation">
     <a href="/" class="nav-brand">
       <div class="nav-logo">
-        <img src="/images/logo-nt.png" alt="Nexa Talent Co." width="34" height="34" />
+        <LogoImage width={34} height={34} loading="eager" />
       </div>
       <span class="nav-brand-text">NEXA TALENT</span>
     </a>
 
-    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+    <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false">
       <span></span>
       <span></span>
       <span></span>

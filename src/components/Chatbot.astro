@@ -1,3 +1,9 @@
+---
+import LogoImage from './LogoImage.astro';
+---
+
+<div class="chatbot-backdrop" data-chatbot-backdrop hidden aria-hidden="true"></div>
+
 <div class="chatbot" data-chatbot>
   <button
     type="button"
@@ -15,11 +21,11 @@
     <span class="chatbot-toggle-label">Ask Nexa</span>
   </button>
 
-  <div class="chatbot-panel" data-chatbot-panel hidden>
+  <div class="chatbot-panel" data-chatbot-panel hidden aria-hidden="true">
     <div class="chatbot-header">
       <div class="chatbot-header-brand">
         <div class="chatbot-avatar">
-          <img src="/images/logo-nt.png" alt="" width="28" height="28" />
+          <LogoImage width={28} height={28} alt="" />
         </div>
         <div>
           <strong>Nexa Assistant</strong>

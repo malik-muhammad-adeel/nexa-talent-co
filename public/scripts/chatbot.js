@@ -49,11 +49,8 @@
   const WELCOME =
     "Hi — I'm the Nexa Talent assistant. Ask me about our services, pricing, process, or how to get started. How can I help?";
 
-  const QUICK_PROMPTS = [
-    'What does Nexa Talent do?',
-    'How does pricing work?',
-    'How do I get started?',
-  ];
+  let isOpen = false;
+  let bound = false;
 
   function normalize(text) {
     return text.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
@@ -88,65 +85,112 @@
     return text.replace(/\n/g, '<br>');
   }
 
-  function initChatbot() {
+  function getElements() {
     const root = document.querySelector('[data-chatbot]');
-    if (!root || root.dataset.initialized === 'true') return;
-    root.dataset.initialized = 'true';
+    if (!root) return null;
 
-    const toggle = root.querySelector('[data-chatbot-toggle]');
-    const panel = root.querySelector('[data-chatbot-panel]');
-    const closeBtn = root.querySelector('[data-chatbot-close]');
-    const messagesEl = root.querySelector('[data-chatbot-messages]');
-    const form = root.querySelector('[data-chatbot-form]');
-    const input = root.querySelector('[data-chatbot-input]');
-    const promptsEl = root.querySelector('[data-chatbot-prompts]');
+    return {
+      root,
+      toggle: root.querySelector('[data-chatbot-toggle]'),
+      panel: root.querySelector('[data-chatbot-panel]'),
+      backdrop: document.querySelector('[data-chatbot-backdrop]'),
+      messagesEl: root.querySelector('[data-chatbot-messages]'),
+      form: root.querySelector('[data-chatbot-form]'),
+      input: root.querySelector('[data-chatbot-input]'),
+      promptsEl: root.querySelector('[data-chatbot-prompts]'),
+    };
+  }
 
-    if (!toggle || !panel || !messagesEl || !form || !input) return;
+  function appendMessage(messagesEl, text, role) {
+    const bubble = document.createElement('div');
+    bubble.className = 'chatbot-message chatbot-message--' + role;
+    bubble.innerHTML = '<div class="chatbot-bubble">' + formatMessage(text) + '</div>';
+    messagesEl.appendChild(bubble);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
 
-    let isOpen = false;
+  function setOpen(open) {
+    const els = getElements();
+    if (!els || !els.panel || !els.toggle) return;
 
-    function appendMessage(text, role) {
-      const bubble = document.createElement('div');
-      bubble.className = 'chatbot-message chatbot-message--' + role;
-      bubble.innerHTML = '<div class="chatbot-bubble">' + formatMessage(text) + '</div>';
-      messagesEl.appendChild(bubble);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
+    isOpen = open;
+    els.panel.hidden = !open;
+    els.panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+    els.panel.classList.toggle('is-open', open);
+    els.toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.classList.toggle('chatbot-open', open);
+
+    if (els.backdrop) {
+      els.backdrop.hidden = !open;
+      els.backdrop.setAttribute('aria-hidden', open ? 'false' : 'true');
     }
 
-    function setOpen(open) {
-      isOpen = open;
-      panel.hidden = !open;
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) {
-        if (!messagesEl.children.length) appendMessage(WELCOME, 'bot');
-        input.focus();
+    if (open) {
+      if (els.messagesEl && !els.messagesEl.children.length) {
+        appendMessage(els.messagesEl, WELCOME, 'bot');
+      }
+      if (els.input) {
+        window.setTimeout(() => els.input.focus(), 50);
       }
     }
+  }
 
-    function sendMessage(text) {
-      const trimmed = text.trim();
-      if (!trimmed) return;
-      appendMessage(trimmed, 'user');
-      input.value = '';
-      if (promptsEl) promptsEl.hidden = true;
+  function sendMessage(text) {
+    const els = getElements();
+    if (!els || !els.messagesEl || !els.input) return;
 
-      window.setTimeout(() => {
-        appendMessage(findAnswer(trimmed), 'bot');
-      }, 350);
+    const trimmed = text.trim();
+    if (!trimmed) return;
+
+    appendMessage(els.messagesEl, trimmed, 'user');
+    els.input.value = '';
+    if (els.promptsEl) els.promptsEl.hidden = true;
+
+    window.setTimeout(() => {
+      appendMessage(els.messagesEl, findAnswer(trimmed), 'bot');
+    }, 300);
+  }
+
+  function bindChatbot() {
+    if (bound) {
+      setOpen(false);
+      return;
     }
 
-    toggle.addEventListener('click', () => setOpen(!isOpen));
-    if (closeBtn) closeBtn.addEventListener('click', () => setOpen(false));
+    const els = getElements();
+    if (!els || !els.root || !els.panel || !els.toggle || !els.form || !els.input) return;
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      sendMessage(input.value);
+    bound = true;
+    setOpen(false);
+
+    els.root.addEventListener('click', (e) => {
+      if (e.target.closest('[data-chatbot-close]')) {
+        e.preventDefault();
+        e.stopPropagation();
+        setOpen(false);
+        return;
+      }
+
+      if (e.target.closest('[data-chatbot-toggle]')) {
+        e.preventDefault();
+        setOpen(!isOpen);
+        return;
+      }
+
+      const promptBtn = e.target.closest('.chatbot-prompts-list button');
+      if (promptBtn) {
+        e.preventDefault();
+        sendMessage(promptBtn.textContent || '');
+      }
     });
 
-    if (promptsEl) {
-      promptsEl.querySelectorAll('button').forEach((btn) => {
-        btn.addEventListener('click', () => sendMessage(btn.textContent || ''));
-      });
+    els.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      sendMessage(els.input.value);
+    });
+
+    if (els.backdrop) {
+      els.backdrop.addEventListener('click', () => setOpen(false));
     }
 
     document.addEventListener('keydown', (e) => {
@@ -154,6 +198,6 @@
     });
   }
 
-  initChatbot();
-  document.addEventListener('astro:page-load', initChatbot);
+  bindChatbot();
+  document.addEventListener('astro:page-load', bindChatbot);
 })();
